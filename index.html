@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Gauri's Little Code World</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: "Courier New", monospace;
+            background:
+                radial-gradient(circle at 20% 20%, #3d0000 0%, transparent 25%),
+                radial-gradient(circle at 80% 80%, #5c0000 0%, transparent 25%),
+                #080808;
+            color: #f5f5f5;
+            overflow-x: hidden;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        header {
+            text-align: center;
+            padding: 50px 20px 25px;
+        }
+
+        .small-text {
+            color: #ff3b3b;
+            letter-spacing: 4px;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 15px 0 10px;
+            font-size: clamp(2.2rem, 6vw, 5rem);
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            text-shadow:
+                4px 4px 0 #b30000,
+                8px 8px 0 #350000;
+        }
+
+        .subtitle {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .subtitle span {
+            color: #ff3030;
+        }
+
+        /* =========================
+           GAME WORLD
+        ========================= */
+
+        .game-world {
+            position: relative;
+            width: min(1100px, 92%);
+            min-height: 650px;
+            margin: 30px auto 60px;
+
+            border: 2px solid #8b0000;
+            background:
+                linear-gradient(rgba(255, 0, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.03) 1px, transparent 1px),
+                #0d0d0d;
+
+            background-size: 40px 40px;
+
+            box-shadow:
+                0 0 30px rgba(180, 0, 0, 0.25),
+                inset 0 0 60px rgba(120, 0, 0, 0.15);
+
+            overflow: hidden;
+        }
+
+        /* =========================
+           DECORATIONS
+        ========================= */
+
+        .decoration {
+            position: absolute;
+            color: #6d0000;
+            font-size: 30px;
+            opacity: 0.6;
+            user-select: none;
+        }
+
+        .d1 {
+            top: 30px;
+            left: 40px;
+        }
+
+        .d2 {
+            top: 100px;
+            right: 50px;
+        }
+
+        .d3 {
+            bottom: 50px;
+            left: 80px;
+        }
+
+        .d4 {
+            bottom: 100px;
+            right: 80px;
+        }
+        .d5 {
+            top: 150px;
+            left: 200px;
+        }
+        .d6 {
+            top: 200px;
+            right: 150px;
+        }
+        .d7 {
+            bottom: 150px;
+            left: 300px;
+        }
+        .d8 {
+            bottom: 200px;
+            right: 250px;
+        }
+
+        /* =========================
+           PROJECT CARDS
+        ========================= */
+
+        .project {
+            position: absolute;
+
+            width: 190px;
+            min-height: 130px;
+
+            padding: 20px;
+
+            background: #111;
+            border: 1px solid #600000;
+
+            transition:
+                transform 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
+
+            cursor: pointer;
+        }
+
+        .project:hover {
+            transform: translateY(-8px) rotate(-1deg);
+            border-color: #ff2222;
+
+            box-shadow:
+                0 10px 30px rgba(255, 0, 0, 0.25),
+                0 0 15px rgba(255, 0, 0, 0.15);
+        }
+
+        .project h2 {
+            color: #ff3030;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .project p {
+            color: #999;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .project .icon {
+            font-size: 25px;
+            margin-bottom: 8px;
+        }
+
+        /* PROJECT POSITIONS */
+
+        .clock {
+            top: 80px;
+            left: 100px;
+        }
+
+        .music {
+            top: 80px;
+            right: 100px;
+        }
+
+        .yoga {
+            top: 270px;
+            left: 50px;
+        }
+
+        .calculator {
+            top: 300px;
+            right: 60px;
+        }
+
+        .game {
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .game:hover {
+            transform: translateX(-50%) translateY(-8px);
+        }
+
+        /* =========================
+           CHARACTER
+        ========================= */
+
+        .character-area {
+            position: absolute;
+            left: 50%;
+            top: 220px;
+
+            transform: translateX(-50%);
+
+            text-align: center;
+        }
+
+        .character {
+            font-size: 65px;
+
+            animation:
+                bounce 2s ease-in-out infinite;
+
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .speech {
+            margin-top: 10px;
+
+            background: #111;
+            border: 1px solid #ff2222;
+
+            padding: 10px 15px;
+
+            color: #eee;
+            font-size: 12px;
+
+            opacity: 0;
+            transform: translateY(5px);
+
+            transition: 0.3s ease;
+        }
+
+        .character-area:hover .speech {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 12px;
+        }
+
+        footer span {
+            color: #ff2222;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            .game-world {
+                min-height: auto;
+                padding: 30px 20px;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .project {
+                position: relative;
+
+                top: auto;
+                left: auto;
+                right: auto;
+                bottom: auto;
+
+                width: 100%;
+            }
+
+            .character-area {
+                position: relative;
+                top: auto;
+                left: auto;
+
+                transform: none;
+
+                order: -1;
+
+                margin: 20px auto;
+            }
+
+            .game {
+                transform: none;
+            }
+
+            .game:hover {
+                transform: translateY(-8px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+
+        <div class="small-text">
+            <h1>Personal coding playground</h1>
+        </div>
+
+        <h2>Little Code World</h2>
+
+        <p class="subtitle">
+            tiny projects • random experiments •
+            <span>things I made while learning</span>
+        </p>
+
+    </header>
+
+
+    <main class="game-world">
+
+        <!-- Decorations -->
+
+        <div class="decoration d1">✦</div>
+        <div class="decoration d2">✧</div>
+        <div class="decoration d3">✦</div>
+        <div class="decoration d4">✧</div>
+        <div class="decoration d5">✦</div>
+        <div class="decoration d6">✧</div>
+        <div class="decoration d7">✦</div>
+        <div class="decoration d8">✧</div>
+
+
+        <!-- Digital Clock -->
+
+        <div class="project clock"
+             onclick="openProject('Digital Clock')">
+
+            <div class="icon">⏰</div>
+
+            <h2>Digital Clock</h2>
+
+            <p>
+                A tiny clock experiment
+                made while learning.
+            </p>
+
+        </div>
+
+
+        <!-- Music -->
+
+        <div class="project music"
+             onclick="openProject('Music Loop')">
+
+            <div class="icon">🎵</div>
+
+            <h2>Music Loop</h2>
+
+            <p>
+                Little music player
+                experiments and loops.
+            </p>
+
+        </div>
+
+
+        <!-- Yoga -->
+
+        <div class="project yoga"
+             onclick="openProject('Yoga App')">
+
+            <div class="icon">🧘</div>
+
+            <h2>Yoga App</h2>
+
+            <p>
+                A small Python GUI
+                project with timers.
+            </p>
+
+        </div>
+
+
+        <!-- Calculator -->
+
+        <div class="project calculator"
+             onclick="openProject('Calculator')">
+
+            <div class="icon">🧮</div>
+
+            <h2>Calculator</h2>
+
+            <p>
+                Simple functions,
+                calculations and logic.
+            </p>
+
+        </div>
+
+
+        <!-- Character -->
+
+        <div class="character-area">
+
+            <div class="character" onclick="characterTalk()">
+                🐺
+            </div>
+
+            <div class="speech" id="speech">
+                hey! welcome to my code world ♡
+            </div>
+
+        </div>
+
+
+        <!-- Mini Game -->
+
+        <div class="project game"
+             onclick="openProject('Mini Game')">
+
+            <div class="icon">🎮</div>
+
+            <h2>Mini Game</h2>
+
+            <p>
+                Small experiments with
+                JavaScript logic.
+            </p>
+
+        </div>
+
+    </main>
+
+
+    <footer>
+
+        made with <span>♥</span> and too much code
+
+    </footer>
+
+
+    <script>
+
+        function openProject(project) {
+
+            alert(
+                project +
+                " — project page coming soon!"
+            );
+
+        }
+
+
+        function characterTalk() {
+
+            const speech =
+                document.getElementById("speech");
+
+            const messages = [
+
+                "hey! welcome to my code world ♡",
+
+                "I made tiny things!",
+                
+                "some code works... eventually 😭",
+
+                "let's build something cool!",
+
+                "more projects loading...",
+
+                "🐺 coding mode: ON"
+            ];
+
+            const random =
+                messages[
+                    Math.floor(
+                        Math.random() * messages.length
+                    )
+                ];
+
+            speech.textContent = random;
+
+            speech.style.opacity = "1";
+
+            setTimeout(() => {
+
+                speech.style.opacity = "0";
+
+            }, 2500);
+
+        }
+
+    </script>
+
+</body>
+</html>
