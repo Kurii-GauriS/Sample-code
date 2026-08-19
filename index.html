@@ -16,332 +16,473 @@
         body {
             min-height: 100vh;
             font-family: "Courier New", monospace;
-            background:
-                radial-gradient(circle at 20% 20%, #3d0000 0%, transparent 25%),
-                radial-gradient(circle at 80% 80%, #5c0000 0%, transparent 25%),
-                #080808;
             color: #f5f5f5;
+
+            background:
+                radial-gradient(circle at 15% 10%, #4a0000 0%, transparent 22%),
+                radial-gradient(circle at 85% 20%, #300000 0%, transparent 20%),
+                radial-gradient(circle at 50% 100%, #450000 0%, transparent 25%),
+                #070707;
+
             overflow-x: hidden;
         }
 
-        /* =========================
+        /* =================================
            HEADER
-        ========================= */
+        ================================= */
 
         header {
             text-align: center;
-            padding: 50px 20px 25px;
+            padding: 55px 20px 35px;
         }
 
         .small-text {
-            color: #ff3b3b;
-            letter-spacing: 4px;
-            font-size: 12px;
+            color: #ff3030;
+            letter-spacing: 5px;
+            font-size: 11px;
             text-transform: uppercase;
         }
 
         h1 {
-            margin: 15px 0 10px;
-            font-size: clamp(2.2rem, 6vw, 5rem);
-            color: white;
+            margin: 15px 0 8px;
+
+            font-family: Arial, sans-serif;
+            font-size: clamp(2.5rem, 7vw, 5rem);
+
             text-transform: uppercase;
-            letter-spacing: -2px;
+            letter-spacing: -3px;
+
+            color: #ffffff;
+
             text-shadow:
-                4px 4px 0 #b30000,
-                8px 8px 0 #350000;
+                3px 3px 0 #c40000,
+                6px 6px 0 #3b0000;
         }
 
         .subtitle {
-            color: #aaa;
-            font-size: 14px;
+            color: #888;
+            font-size: 13px;
+            letter-spacing: 1px;
         }
 
         .subtitle span {
+            color: #ff3b3b;
+        }
+
+
+        /* =================================
+           SPARKLES
+        ================================= */
+
+        .sparkle {
+            position: fixed;
+
             color: #ff3030;
-        }
 
-        /* =========================
-           GAME WORLD
-        ========================= */
-
-        .game-world {
-            position: relative;
-            width: min(1100px, 92%);
-            min-height: 650px;
-            margin: 30px auto 60px;
-
-            border: 2px solid #8b0000;
-            background:
-                linear-gradient(rgba(255, 0, 0, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 0, 0, 0.03) 1px, transparent 1px),
-                #0d0d0d;
-
-            background-size: 40px 40px;
-
-            box-shadow:
-                0 0 30px rgba(180, 0, 0, 0.25),
-                inset 0 0 60px rgba(120, 0, 0, 0.15);
-
-            overflow: hidden;
-        }
-
-        /* =========================
-           DECORATIONS
-        ========================= */
-
-        .decoration {
-            position: absolute;
-            color: #6d0000;
-            font-size: 30px;
-            opacity: 0.6;
-            user-select: none;
-        }
-
-        .d1 {
-            top: 30px;
-            left: 40px;
-        }
-
-        .d2 {
-            top: 100px;
-            right: 50px;
-        }
-
-        .d3 {
-            bottom: 50px;
-            left: 80px;
-        }
-
-        .d4 {
-            bottom: 100px;
-            right: 80px;
-        }
-        .d5 {
-            top: 150px;
-            left: 200px;
-        }
-        .d6 {
-            top: 200px;
-            right: 150px;
-        }
-        .d7 {
-            bottom: 150px;
-            left: 300px;
-        }
-        .d8 {
-            bottom: 200px;
-            right: 250px;
-        }
-
-        /* =========================
-           PROJECT CARDS
-        ========================= */
-
-        .project {
-            position: absolute;
-
-            width: 190px;
-            min-height: 130px;
-
-            padding: 20px;
-
-            background: #111;
-            border: 1px solid #600000;
-
-            transition:
-                transform 0.3s ease,
-                border-color 0.3s ease,
-                box-shadow 0.3s ease;
-
-            cursor: pointer;
-        }
-
-        .project:hover {
-            transform: translateY(-8px) rotate(-1deg);
-            border-color: #ff2222;
-
-            box-shadow:
-                0 10px 30px rgba(255, 0, 0, 0.25),
-                0 0 15px rgba(255, 0, 0, 0.15);
-        }
-
-        .project h2 {
-            color: #ff3030;
             font-size: 18px;
-            margin-bottom: 10px;
-        }
 
-        .project p {
-            color: #999;
-            font-size: 12px;
-            line-height: 1.6;
-        }
-
-        .project .icon {
-            font-size: 25px;
-            margin-bottom: 8px;
-        }
-
-        /* PROJECT POSITIONS */
-
-        .clock {
-            top: 80px;
-            left: 100px;
-        }
-
-        .music {
-            top: 80px;
-            right: 100px;
-        }
-
-        .yoga {
-            top: 270px;
-            left: 50px;
-        }
-
-        .calculator {
-            top: 300px;
-            right: 60px;
-        }
-
-        .game {
-            bottom: 60px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .game:hover {
-            transform: translateX(-50%) translateY(-8px);
-        }
-
-        /* =========================
-           CHARACTER
-        ========================= */
-
-        .character-area {
-            position: absolute;
-            left: 50%;
-            top: 220px;
-
-            transform: translateX(-50%);
-
-            text-align: center;
-        }
-
-        .character {
-            font-size: 65px;
+            pointer-events: none;
 
             animation:
-                bounce 2s ease-in-out infinite;
+                sparkleFloat 4s ease-in-out infinite;
 
-            cursor: pointer;
-            display: inline-block;
+            opacity: 0.7;
+
+            text-shadow:
+                0 0 6px #ff0000,
+                0 0 14px #ff0000;
         }
 
-        .speech {
-            margin-top: 10px;
+        .s1 { top: 8%; left: 8%; }
+        .s2 { top: 15%; right: 12%; animation-delay: 1s; }
+        .s3 { top: 35%; left: 4%; animation-delay: 2s; }
+        .s4 { top: 50%; right: 5%; animation-delay: .5s; }
+        .s5 { bottom: 20%; left: 10%; animation-delay: 1.5s; }
+        .s6 { bottom: 12%; right: 15%; animation-delay: 2.5s; }
 
-            background: #111;
-            border: 1px solid #ff2222;
+        @keyframes sparkleFloat {
 
-            padding: 10px 15px;
-
-            color: #eee;
-            font-size: 12px;
-
-            opacity: 0;
-            transform: translateY(5px);
-
-            transition: 0.3s ease;
-        }
-
-        .character-area:hover .speech {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        @keyframes bounce {
             0%, 100% {
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
+                opacity: .4;
             }
 
             50% {
-                transform: translateY(-10px);
+                transform: translateY(-12px) scale(1.35);
+                opacity: 1;
             }
         }
 
-        /* =========================
+
+        /* =================================
+           MAIN CODE WORLD
+        ================================= */
+
+        .game-world {
+
+            width: min(1200px, 92%);
+            margin: 0 auto 60px;
+
+            padding: 35px;
+
+            border: 1px solid #720000;
+
+            background:
+                linear-gradient(
+                    rgba(255, 0, 0, .025) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255, 0, 0, .025) 1px,
+                    transparent 1px
+                ),
+                #0b0b0b;
+
+            background-size: 35px 35px;
+
+            box-shadow:
+                0 0 40px rgba(150, 0, 0, .25),
+                inset 0 0 80px rgba(120, 0, 0, .08);
+
+            position: relative;
+        }
+
+
+        /* =================================
+           GRID
+        ================================= */
+
+        .project-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+        }
+
+
+        /* =================================
+           PROJECT CARD
+        ================================= */
+
+        .project {
+
+            position: relative;
+
+            min-height: 170px;
+
+            padding: 22px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #161616,
+                    #0b0b0b
+                );
+
+            border: 1px solid #420000;
+
+            text-decoration: none;
+
+            color: white;
+
+            overflow: hidden;
+
+            transition:
+                transform .3s ease,
+                border-color .3s ease,
+                box-shadow .3s ease;
+
+        }
+
+
+        /* Glitter inside card */
+
+        .project::before {
+
+            content: "✦";
+
+            position: absolute;
+
+            top: 12px;
+            right: 15px;
+
+            color: #8f0000;
+
+            font-size: 14px;
+
+            transition: .3s ease;
+
+        }
+
+
+        .project::after {
+
+            content: "✧";
+
+            position: absolute;
+
+            bottom: 10px;
+            left: 12px;
+
+            color: #500000;
+
+            font-size: 12px;
+
+            transition: .3s ease;
+
+        }
+
+
+        .project:hover {
+
+            transform:
+                translateY(-7px)
+                rotate(-1deg);
+
+            border-color: #ff1f1f;
+
+            box-shadow:
+                0 12px 35px rgba(255, 0, 0, .2),
+                0 0 18px rgba(255, 0, 0, .15);
+
+        }
+
+
+        .project:hover::before,
+        .project:hover::after {
+
+            color: #ff3030;
+
+            text-shadow:
+                0 0 6px #ff0000,
+                0 0 12px #ff0000;
+
+        }
+
+
+        /* =================================
+           PROJECT CONTENT
+        ================================= */
+
+        .icon {
+
+            font-size: 27px;
+
+            margin-bottom: 15px;
+
+            filter:
+                drop-shadow(0 0 5px rgba(255, 0, 0, .35));
+
+        }
+
+
+        .project h2 {
+
+            color: #ff3030;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 18px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .project p {
+
+            color: #888;
+
+            font-size: 11px;
+
+            line-height: 1.7;
+
+        }
+
+
+        .tech {
+
+            display: inline-block;
+
+            margin-top: 15px;
+
+            padding: 4px 8px;
+
+            border: 1px solid #450000;
+
+            color: #aaa;
+
+            font-size: 9px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        /* =================================
+           CENTER MESSAGE
+        ================================= */
+
+        .center-message {
+
+            grid-column: span 4;
+
+            text-align: center;
+
+            padding: 25px;
+
+            border-top: 1px solid #350000;
+            border-bottom: 1px solid #350000;
+
+            margin: 5px 0;
+
+        }
+
+
+        .center-message .sparkle-title {
+
+            color: #ff3030;
+
+            font-size: 18px;
+
+            letter-spacing: 5px;
+
+            text-shadow:
+                0 0 10px rgba(255, 0, 0, .6);
+
+        }
+
+
+        .center-message p {
+
+            color: #666;
+
+            font-size: 11px;
+
+            margin-top: 10px;
+
+        }
+
+
+        /* =================================
            FOOTER
-        ========================= */
+        ================================= */
 
         footer {
+
             text-align: center;
-            padding: 20px;
-            color: #666;
-            font-size: 12px;
+
+            padding: 25px;
+
+            color: #555;
+
+            font-size: 11px;
+
+            letter-spacing: 1px;
+
         }
 
         footer span {
+
             color: #ff2222;
+
+            text-shadow:
+                0 0 8px #ff0000;
+
         }
 
-        /* =========================
-           MOBILE
-        ========================= */
 
-        @media (max-width: 700px) {
+        /* =================================
+           MOBILE
+        ================================= */
+
+        @media (max-width: 900px) {
+
+            .project-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+            .center-message {
+
+                grid-column: span 2;
+
+            }
+
+        }
+
+
+        @media (max-width: 550px) {
+
+            header {
+
+                padding-top: 40px;
+
+            }
 
             .game-world {
-                min-height: auto;
-                padding: 30px 20px;
-                display: flex;
-                flex-direction: column;
-                gap: 20px;
+
+                padding: 18px;
+
+            }
+
+            .project-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .center-message {
+
+                grid-column: span 1;
+
             }
 
             .project {
-                position: relative;
 
-                top: auto;
-                left: auto;
-                right: auto;
-                bottom: auto;
+                min-height: 150px;
 
-                width: 100%;
             }
 
-            .character-area {
-                position: relative;
-                top: auto;
-                left: auto;
-
-                transform: none;
-
-                order: -1;
-
-                margin: 20px auto;
-            }
-
-            .game {
-                transform: none;
-            }
-
-            .game:hover {
-                transform: translateY(-8px);
-            }
         }
+
     </style>
 </head>
 
+
 <body>
+
+
+    <!-- Floating glitter -->
+
+    <div class="sparkle s1">✦</div>
+    <div class="sparkle s2">✧</div>
+    <div class="sparkle s3">⋆</div>
+    <div class="sparkle s4">✦</div>
+    <div class="sparkle s5">✧</div>
+    <div class="sparkle s6">⋆</div>
+
+
+    <!-- HEADER -->
 
     <header>
 
         <div class="small-text">
-            <h1>Personal coding playground</h1>
+            personal coding playground
         </div>
 
-        <h2>Little Code World</h2>
+        <h1>
+            Little Code World
+        </h1>
 
         <p class="subtitle">
             tiny projects • random experiments •
@@ -351,116 +492,317 @@
     </header>
 
 
+    <!-- PROJECT WORLD -->
+
     <main class="game-world">
 
-        <!-- Decorations -->
-
-        <div class="decoration d1">✦</div>
-        <div class="decoration d2">✧</div>
-        <div class="decoration d3">✦</div>
-        <div class="decoration d4">✧</div>
-        <div class="decoration d5">✦</div>
-        <div class="decoration d6">✧</div>
-        <div class="decoration d7">✦</div>
-        <div class="decoration d8">✧</div>
+        <div class="project-grid">
 
 
-        <!-- Digital Clock -->
+            <!-- 01 -->
 
-        <div class="project clock"
-             onclick="openProject('Digital Clock')">
+            <a
+                href="music.html"
+                class="project"
+            >
 
-            <div class="icon">⏰</div>
+                <div class="icon">♪</div>
 
-            <h2>Digital Clock</h2>
+                <h2>Music Loop</h2>
 
-            <p>
-                A tiny clock experiment
-                made while learning.
-            </p>
+                <p>
+                    A little music player
+                    experiment with songs,
+                    audio and loops.
+                </p>
 
-        </div>
+                <span class="tech">
+                    Python • Audio
+                </span>
 
-
-        <!-- Music -->
-
-        <div class="project music"
-             onclick="openProject('Music Loop')">
-
-            <div class="icon">🎵</div>
-
-            <h2>Music Loop</h2>
-
-            <p>
-                Little music player
-                experiments and loops.
-            </p>
-
-        </div>
+            </a>
 
 
-        <!-- Yoga -->
+            <!-- 02 -->
 
-        <div class="project yoga"
-             onclick="openProject('Yoga App')">
+            <a
+                href="clock.html"
+                class="project"
+            >
 
-            <div class="icon">🧘</div>
+                <div class="icon">◷</div>
 
-            <h2>Yoga App</h2>
+                <h2>Digital Clock</h2>
 
-            <p>
-                A small Python GUI
-                project with timers.
-            </p>
+                <p>
+                    A simple digital clock
+                    experiment made while
+                    learning programming.
+                </p>
 
-        </div>
+                <span class="tech">
+                    Python
+                </span>
 
-
-        <!-- Calculator -->
-
-        <div class="project calculator"
-             onclick="openProject('Calculator')">
-
-            <div class="icon">🧮</div>
-
-            <h2>Calculator</h2>
-
-            <p>
-                Simple functions,
-                calculations and logic.
-            </p>
-
-        </div>
+            </a>
 
 
-        <!-- Character -->
+            <!-- 03 -->
 
-        <div class="character-area">
+            <a
+                href="yoga.html"
+                class="project"
+            >
 
-            <div class="character" onclick="characterTalk()">
-                🐺
+                <div class="icon">✧</div>
+
+                <h2>Yoga App</h2>
+
+                <p>
+                    A small yoga application
+                    with poses, timers and
+                    music.
+                </p>
+
+                <span class="tech">
+                    Python GUI
+                </span>
+
+            </a>
+
+
+            <!-- 04 -->
+
+            <a
+                href="calculator.html"
+                class="project"
+            >
+
+                <div class="icon">＋</div>
+
+                <h2>Calculator</h2>
+
+                <p>
+                    Small experiment with
+                    functions, input and
+                    calculations.
+                </p>
+
+                <span class="tech">
+                    Python
+                </span>
+
+            </a>
+
+
+            <!-- CENTER -->
+
+            <div class="center-message">
+
+                <div class="sparkle-title">
+                    ✦ ✧ ⋆ KEEP BUILDING ⋆ ✧ ✦
+                </div>
+
+                <p>
+                    Some projects are useful.
+                    Some are experiments.
+                    Some were made just because I wondered,
+                    "Can I code this?"
+                </p>
+
             </div>
 
-            <div class="speech" id="speech">
-                hey! welcome to my code world ♡
-            </div>
 
-        </div>
+            <!-- 05 -->
+
+            <a
+                href="drawing.html"
+                class="project"
+            >
+
+                <div class="icon">✎</div>
+
+                <h2>Drawing Pad</h2>
+
+                <p>
+                    A small drawing experiment
+                    using the browser canvas.
+                </p>
+
+                <span class="tech">
+                    Canvas
+                </span>
+
+            </a>
 
 
-        <!-- Mini Game -->
+            <!-- 06 -->
 
-        <div class="project game"
-             onclick="openProject('Mini Game')">
+            <a
+                href="camera.html"
+                class="project"
+            >
 
-            <div class="icon">🎮</div>
+                <div class="icon">⌁</div>
 
-            <h2>Mini Game</h2>
+                <h2>Camera</h2>
 
-            <p>
-                Small experiments with
-                JavaScript logic.
-            </p>
+                <p>
+                    Camera and image
+                    experiments using
+                    browser APIs.
+                </p>
+
+                <span class="tech">
+                    Media API
+                </span>
+
+            </a>
+
+
+            <!-- 07 -->
+
+            <a
+                href="mini-game.html"
+                class="project"
+            >
+
+                <div class="icon">◇</div>
+
+                <h2>Mini Game</h2>
+
+                <p>
+                    Small game experiments
+                    built while learning
+                    JavaScript.
+                </p>
+
+                <span class="tech">
+                    JavaScript
+                </span>
+
+            </a>
+
+
+            <!-- 08 -->
+
+            <a
+                href="css.html"
+                class="project"
+            >
+
+                <div class="icon">✦</div>
+
+                <h2>CSS Experiments</h2>
+
+                <p>
+                    Animations, effects,
+                    layouts and visual
+                    experiments.
+                </p>
+
+                <span class="tech">
+                    CSS
+                </span>
+
+            </a>
+
+
+            <!-- 09 -->
+
+            <a
+                href="python.html"
+                class="project"
+            >
+
+                <div class="icon">⌘</div>
+
+                <h2>Python Lab</h2>
+
+                <p>
+                    Tiny Python exercises
+                    and experiments from
+                    my learning journey.
+                </p>
+
+                <span class="tech">
+                    Python
+                </span>
+
+            </a>
+
+
+            <!-- 10 -->
+
+            <a
+                href="javascript.html"
+                class="project"
+            >
+
+                <div class="icon">JS</div>
+
+                <h2>JavaScript Lab</h2>
+
+                <p>
+                    Little experiments with
+                    events, functions and
+                    interactions.
+                </p>
+
+                <span class="tech">
+                    JavaScript
+                </span>
+
+            </a>
+
+
+            <!-- 11 -->
+
+            <a
+                href="html.html"
+                class="project"
+            >
+
+                <div class="icon">&lt;/&gt;</div>
+
+                <h2>HTML Experiments</h2>
+
+                <p>
+                    Testing tags, layouts
+                    and different HTML
+                    elements.
+                </p>
+
+                <span class="tech">
+                    HTML
+                </span>
+
+            </a>
+
+
+            <!-- 12 -->
+
+            <a
+                href="future.html"
+                class="project"
+            >
+
+                <div class="icon">⋆</div>
+
+                <h2>Coming Soon</h2>
+
+                <p>
+                    More tiny projects
+                    will appear here
+                    as I keep learning.
+                </p>
+
+                <span class="tech">
+                    Loading...
+                </span>
+
+            </a>
+
 
         </div>
 
@@ -469,63 +811,11 @@
 
     <footer>
 
-        made with <span>♥</span> and too much code
+        built with <span>♥</span>,
+        curiosity & too much code ✦
 
     </footer>
 
-
-    <script>
-
-        function openProject(project) {
-
-            alert(
-                project +
-                " — project page coming soon!"
-            );
-
-        }
-
-
-        function characterTalk() {
-
-            const speech =
-                document.getElementById("speech");
-
-            const messages = [
-
-                "hey! welcome to my code world ♡",
-
-                "I made tiny things!",
-                
-                "some code works... eventually 😭",
-
-                "let's build something cool!",
-
-                "more projects loading...",
-
-                "🐺 coding mode: ON"
-            ];
-
-            const random =
-                messages[
-                    Math.floor(
-                        Math.random() * messages.length
-                    )
-                ];
-
-            speech.textContent = random;
-
-            speech.style.opacity = "1";
-
-            setTimeout(() => {
-
-                speech.style.opacity = "0";
-
-            }, 2500);
-
-        }
-
-    </script>
 
 </body>
 </html>
