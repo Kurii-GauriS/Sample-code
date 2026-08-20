@@ -6,8 +6,8 @@ Little experiments and mini projects I've made while learning:
 
 | Tiny Project | What It Demonstrates |
 |-------------|----------------------|
-| ⏰ Digital Clock | JavaScript / Python |
 | 🎵 Music Loop | Audio + Loops |
+| ⏰ Digital Clock | JavaScript / Python |
 | 🧘 Yoga App | Python GUI |
 | 🧮 Calculator | Functions |
 | 🎨 Drawing Pad | Canvas |
