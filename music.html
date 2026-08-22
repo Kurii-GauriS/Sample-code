@@ -168,12 +168,44 @@
         .polaroid:hover .tape {
             transform: translateX(-50%) rotate(-4deg);
         }
+
+    .page-title {
+    color: rgb(153, 48, 48);
+    font-size: 45px;
+    text-shadow:
+        0 0 5px white,
+        0 0 10px #1f2628,
+        0 0 20px #00c8ff,
+        0 0 35px #ff003c,
+        0 0 60px #ff003c;
+    animation: neonTitle 2s ease-in-out infinite alternate;
+}
+
+@keyframes neonTitle {
+    from {
+        text-shadow:
+            0 0 5px white,
+            0 0 10px #222627,
+            0 0 20px #00c8ff,
+            0 0 30px #ff003c;
+    }
+
+    to {
+        text-shadow:
+            0 0 10px white,
+            0 0 20px #121213,
+            0 0 35px #00c8ff,
+            0 0 50px #ff003c,
+            0 0 80px #ff003c;
+    }
+}
     </style>
 </head>
 <body>
     <h1 class="page-title">
-        <b><i>💿Music Disc Player💿</i></b>
-    </h1>
+    <b><i>💿Music Disc Player💿</i></b>
+</h1>
+    
     <div class="song-container" id="song-container"></div>
 
     <script>
