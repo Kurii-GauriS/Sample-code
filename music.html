@@ -29,35 +29,68 @@
         }
 
         /* Grid Container for 4x4 layout */
-        .song-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px 60px;
-            padding: 50px;
-            max-width: 1400px;
-            margin: 0 auto;
-            justify-items: center;
-        }
+.song-container {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
 
-        .music-card {
-            width: 100%;
-            max-width: 350px;
-            padding: 30px 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            border-radius: 35px;
-            background: rgba(255, 255, 255, .08);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, .2);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, .4);
-            opacity: 0;
-            transform: translateY(80px);
-            transition: opacity 0.7s, transform 0.7s, box-shadow 0.4s;
-        }
+    gap: 40px;
+    padding: 50px;
+    max-width: 1500px;
+    margin: 0 auto;
 
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.song-container::-webkit-scrollbar {
+    display: none;
+}
+
+.music-card {
+    flex: 0 0 calc((100% - 120px) / 4);
+    min-width: 0;
+    box-sizing: border-box;
+
+    scroll-snap-align: start;
+
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+
+    border-radius: 35px;
+    background: rgba(255, 255, 255, .08);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, .2);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, .4);
+
+    opacity: 0;
+    transform: translateY(80px);
+    transition: opacity 0.7s, transform 0.7s, box-shadow 0.4s;
+}
+
+@media (max-width: 1100px) {
+    .music-card {
+        flex: 0 0 calc((100% - 40px) / 2);
+    }
+}
+
+@media (max-width: 600px) {
+    .song-container {
+        padding: 30px 20px;
+        gap: 20px;
+    }
+
+    .music-card {
+        flex: 0 0 85%;
+    }
+}
         .music-card.show {
             opacity: 1;
             transform: translateY(0);
@@ -199,12 +232,56 @@
             0 0 80px #ff003c;
     }
 }
+.search-box {
+    display: flex;
+    justify-content: center;
+    margin: 25px auto 10px;
+}
+
+.search-box input {
+    width: 420px;
+    max-width: 80%;
+    padding: 15px 22px;
+
+    border: 2px solid rgba(0, 200, 255, 0.6);
+    border-radius: 30px;
+
+    background: rgba(0, 0, 0, 0.55);
+    color: white;
+
+    font-size: 17px;
+    outline: none;
+
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 15px rgba(0, 200, 255, 0.35);
+
+    transition: 0.3s;
+}
+
+.search-box input:focus {
+    box-shadow:
+        0 0 15px #00c8ff,
+        0 0 35px rgba(255, 0, 60, 0.5);
+
+    border-color: #ff003c;
+}
+
+.search-box input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
     </style>
 </head>
 <body>
     <h1 class="page-title">
     <b><i>💿Music Disc Player💿</i></b>
 </h1>
+<div class="search-box">
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="🔍 Search song or artist..."
+    >
+</div>
     <div class="song-container" id="song-container"></div>
 
     <script>
@@ -256,75 +333,160 @@
         ];
 
         const container = document.getElementById("song-container");
+        const searchInput = document.getElementById("searchInput");
 
-        // Dynamically build cards with encodeURI to handle spaces and special characters in file paths
-        songs.forEach((song, index) => {
-            const encodedAudio = encodeURI(song.audio);
-            const cardHTML = `
-                <div class="music-card">
-                    <div class="music-info">
-                        <h1><i>${song.title}</i></h1>
-                        <p><b>${song.artist}</b></p>
-                        <audio controls preload="none">
-                            <source src="${encodedAudio}" type="audio/mpeg">
-                            Your browser does not support the audio element.
-                        </audio>
+        let filteredSongs = [...songs];
+
+        function getCardsPerPage() {
+            if (window.innerWidth <= 600) return 1;
+            if (window.innerWidth <= 1100) return 2;
+            return 4;
+        }
+
+        function renderSongs(songList) {
+            // Stop any currently playing audio before rebuilding the list.
+            document.querySelectorAll("audio").forEach(audio => audio.pause());
+
+            container.innerHTML = "";
+
+            songList.forEach((song) => {
+                const encodedAudio = encodeURI(song.audio);
+
+                container.insertAdjacentHTML("beforeend", `
+                    <div class="music-card">
+                        <div class="music-info">
+                            <h1><i>${song.title}</i></h1>
+                            <p><b>${song.artist}</b></p>
+
+                            <audio controls preload="none">
+                                <source src="${encodedAudio}" type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+
+                        <div class="disc">💿</div>
+
+                        <div class="polaroid">
+                            <div class="tape"></div>
+                            <img src="${song.image}" alt="${song.title}">
+                            <span>${song.artist}</span>
+                        </div>
                     </div>
+                `);
+            });
 
-                    <div class="disc">💿</div>
+            setupPlayers();
+            setupRevealAnimation();
+            scrollToPage(0, false);
+        }
 
-                    <div class="polaroid">
-                        <div class="tape"></div>
-                        <img src="${song.image}" alt="${song.title}">
-                        <span>${song.artist}</span>
-                    </div>
-                </div>
-            `;
-            container.innerHTML += cardHTML;
-        });
+        function setupPlayers() {
+            const cards = container.querySelectorAll(".music-card");
+            const audios = container.querySelectorAll("audio");
+            const discs = container.querySelectorAll(".disc");
 
-        // Initialize events after DOM render
-        const cards = document.querySelectorAll(".music-card");
-        const audios = document.querySelectorAll("audio");
-        const discs = document.querySelectorAll(".disc");
+            audios.forEach((audio, index) => {
 
-        cards.forEach((card, index) => {
-            const audio = audios[index];
-            const disc = discs[index];
+                audio.addEventListener("play", () => {
+                    audios.forEach((otherAudio, otherIndex) => {
+                        if (otherIndex !== index) {
+                            otherAudio.pause();
+                            discs[otherIndex].classList.remove("spin");
+                        }
+                    });
 
-            audio.addEventListener("play", () => {
-                // Pause all other audio tracks
-                audios.forEach((a, i) => {
-                    if (i !== index) {
-                        a.pause();
-                        discs[i].classList.remove("spin");
+                    discs[index].classList.add("spin");
+                });
+
+                audio.addEventListener("pause", () => {
+                    discs[index].classList.remove("spin");
+                });
+
+                audio.addEventListener("ended", () => {
+                    discs[index].classList.remove("spin");
+
+                    const nextIndex = index + 1;
+
+                    if (nextIndex < audios.length) {
+                        // When the next song starts a new group of 4,
+                        // automatically slide to that group.
+                        if (nextIndex % getCardsPerPage() === 0) {
+                            scrollToPage(
+                                Math.floor(nextIndex / getCardsPerPage()),
+                                true
+                            );
+                        }
+
+                        audios[nextIndex].play().catch(() => {});
+                    } else if (audios.length > 0) {
+                        // Loop back to the first filtered song.
+                        scrollToPage(0, true);
+                        audios[0].play().catch(() => {});
                     }
                 });
-                disc.classList.add("spin");
             });
+        }
 
-            audio.addEventListener("pause", () => {
-                disc.classList.remove("spin");
-            });
+        function scrollToPage(page, smooth = true) {
+            const cards = container.querySelectorAll(".music-card");
 
-            audio.addEventListener("ended", () => {
-                disc.classList.remove("spin");
-                // Auto-play next song on completion
-                let nextIndex = (index + 1) % audios.length;
-                audios[nextIndex].play();
+            if (!cards.length) return;
+
+            const cardsPerPage = getCardsPerPage();
+            const targetIndex = page * cardsPerPage;
+
+            if (targetIndex >= cards.length) return;
+
+            const targetCard = cards[targetIndex];
+
+            container.scrollTo({
+                left: Math.max(0, targetCard.offsetLeft - 20),
+                behavior: smooth ? "smooth" : "auto"
             });
+        }
+
+        // Search by song title OR artist.
+        searchInput.addEventListener("input", () => {
+            const searchText = searchInput.value.toLowerCase().trim();
+
+            filteredSongs = songs.filter(song =>
+                song.title.toLowerCase().includes(searchText) ||
+                song.artist.toLowerCase().includes(searchText)
+            );
+
+            renderSongs(filteredSongs);
         });
 
-        // Scroll reveal animation
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("show");
-                }
-            });
-        }, { threshold: 0.1 });
+        // Optional manual navigation: mouse wheel over the music area
+        // moves horizontally instead of vertically.
+        container.addEventListener("wheel", (event) => {
+            if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
+                event.preventDefault();
+                container.scrollLeft += event.deltaY;
+            }
+        }, { passive: false });
 
-        cards.forEach(card => observer.observe(card));
+        function setupRevealAnimation() {
+            const cards = container.querySelectorAll(".music-card");
+
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("show");
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            cards.forEach(card => observer.observe(card));
+        }
+
+        // Recalculate the layout after changing between desktop/tablet/mobile.
+        window.addEventListener("resize", () => {
+            scrollToPage(0, false);
+        });
+
+        // First render.
+        renderSongs(filteredSongs);
     </script>
 </body>
 </html>
