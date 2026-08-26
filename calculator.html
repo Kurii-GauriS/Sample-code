@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aesthetic White Calculator</title>
+</head>
+<style>
+    :root {
+  /* High-Gloss Liquid Metal Pink Palette */
+  --calc-bg: rgba(255, 255, 255, 0.45);
+  --calc-border: rgba(255, 255, 255, 0.75);
+  --btn-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(245, 225, 235, 0.6) 100%);
+  --btn-action-glass: linear-gradient(135deg, rgba(240, 200, 220, 0.8) 0%, rgba(220, 175, 200, 0.5) 100%);
+  --btn-exe-glass: linear-gradient(135deg, rgba(215, 160, 195, 0.9) 0%, rgba(185, 125, 165, 0.7) 100%);
+  --screen-bg: rgba(245, 240, 243, 0.85);
+  --text-dark: #2d1e27;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  
+  /* Setting the high-gloss metallic liquid pink background */
+  background-image: url('https://i.pinimg.com/originals/cc/db/bf/ccdbbf610d5d779be1817fd27832ed3d.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.calculator-container {
+  width: 320px;
+  background: var(--calc-bg);
+  /* Liquid Glassmorphism Effect */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 28px 24px;
+  border-radius: 36px;
+  
+  /* Ambient liquid shadow and metallic edge highlights */
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25),
+              0 0 0 1px var(--calc-border) inset,
+              0 8px 32px rgba(180, 100, 140, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.brand {
+  font-size: 13px;
+  font-weight: 700;
+  color: #4a3443;
+  margin-bottom: 14px;
+  letter-spacing: 0.8px;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.brand span { 
+  font-size: 11px; 
+  font-weight: 500; 
+  opacity: 0.8;
+}
+
+.display {
+  background: var(--screen-bg);
+  border-radius: 16px;
+  padding: 12px 18px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  margin-bottom: 22px;
+  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.08),
+              0 4px 12px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+}
+
+.result {
+  font-size: 28px;
+  color: var(--text-dark);
+  font-family: 'SF Mono', Monaco, Consolas, monospace;
+  white-space: nowrap;
+  overflow-x: auto;
+  font-weight: 600;
+}
+
+/* Precise Grid Layout */
+.keypad-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  justify-items: center;
+  align-items: center;
+}
+
+.btn {
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  outline: none;
+  background: var(--btn-glass);
+  color: var(--text-dark);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08), 
+              0 1px 3px rgba(255, 255, 255, 0.9) inset;
+  transition: all 0.12s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+}
+
+.btn:hover {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12), 
+              0 1px 4px rgba(255, 255, 255, 1) inset;
+}
+
+.btn:active {
+  transform: translateY(2px) scale(0.97);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn-round {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+}
+
+.btn-pill {
+  width: 52px;
+  height: 52px;
+  border-radius: 18px;
+}
+
+.formula-btn {
+  background: var(--btn-action-glass);
+  color: #4a2d3f;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.action {
+  background: var(--btn-action-glass);
+  color: #4a2d3f;
+}
+
+.exe-btn {
+  background: var(--btn-exe-glass);
+  color: #ffffff;
+  font-weight: bold;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+</style>
+<body>
+  <div class="calculator-container">
+    <div class="brand">E-Cal<span>style</span></div>
+    
+    <!-- Screen Display -->
+    <div class="display">
+      <div id="result" class="result">0</div>
+    </div>
+
+    <!-- Keypad Grid (Standard 4-Column Layout) -->
+    <div class="keypad-grid">
+      <button class="btn btn-round action" onclick="clearDisplay()">AC</button>
+      <button class="btn btn-round action" onclick="deleteChar()">⌫</button>
+      <button class="btn btn-pill formula-btn" onclick="applyFormula()">(a+b)²</button>
+      <button class="btn btn-round action" onclick="appendValue('/')">÷</button>
+
+      <button class="btn btn-round" onclick="appendValue('7')">7</button>
+      <button class="btn btn-round" onclick="appendValue('8')">8</button>
+      <button class="btn btn-round" onclick="appendValue('9')">9</button>
+      <button class="btn btn-round action" onclick="appendValue('*')">×</button>
+
+      <button class="btn btn-round" onclick="appendValue('4')">4</button>
+      <button class="btn btn-round" onclick="appendValue('5')">5</button>
+      <button class="btn btn-round" onclick="appendValue('6')">6</button>
+      <button class="btn btn-round action" onclick="appendValue('-')">-</button>
+
+      <button class="btn btn-round" onclick="appendValue('1')">1</button>
+      <button class="btn btn-round" onclick="appendValue('2')">2</button>
+      <button class="btn btn-round" onclick="appendValue('3')">3</button>
+      <button class="btn btn-round action" onclick="appendValue('+')">+</button>
+
+      <button class="btn btn-round" onclick="appendValue('0')">0</button>
+      <button class="btn btn-round" onclick="appendValue('.')">.</button>
+      <button class="btn btn-round" onclick="appendValue(',')">,</button>
+      <button class="btn btn-round exe-btn" onclick="calculate()">=</button>
+    </div>
+  </div>
+
+  <script>
+    let display = document.getElementById('result');
+let currentInput = '';
+
+function appendValue(val) {
+  if (display.innerText === '0' && val !== '.') {
+    currentInput = val;
+  } else {
+    currentInput += val;
+  }
+  display.innerText = currentInput;
+}
+
+function clearDisplay() {
+  currentInput = '';
+  display.innerText = '0';
+}
+
+function deleteChar() {
+  currentInput = currentInput.slice(0, -1);
+  display.innerText = currentInput || '0';
+}
+
+// Function to calculate (a+b)^2 based on two comma-separated inputs: "a,b"
+function applyFormula() {
+  if (!currentInput.includes(',')) {
+    display.innerText = 'Type "a,b" first';
+    setTimeout(() => { display.innerText = currentInput || '0'; }, 1500);
+    return;
+  }
+  
+  let parts = currentInput.split(',');
+  let a = parseFloat(parts[0]);
+  let b = parseFloat(parts[1]);
+
+  if (isNaN(a) || isNaN(b)) {
+    display.innerText = 'Error';
+    currentInput = '';
+  } else {
+    // Equation: (a+b)^2 = a^2 + 2ab + b^2
+    let result = Math.pow(a + b, 2);
+    display.innerText = result;
+    currentInput = result.toString();
+  }
+}
+
+function calculate() {
+  try {
+    let formattedInput = currentInput.replace(/×/g, '*').replace(/÷/g, '/');
+    let res = eval(formattedInput);
+    display.innerText = res;
+    currentInput = res.toString();
+  } catch (e) {
+    display.innerText = 'Error';
+    currentInput = '';
+  }
+}
+  </script>
+</body>
+</html>
